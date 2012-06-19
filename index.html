@@ -1,0 +1,29 @@
+
+<html>
+<head>
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="/libraries/jquery.min.js"></script>
+  <script>
+    var socket = io.connect("http://jamesjn.com:8080");
+
+    $(document).ready(function(){
+      $('input#chat_submit').on('click', function(){
+        text = $('input#chat_input').val();
+        $('div#chat_text').append(text+'<br/>');
+        socket.emit("message", { message: text });
+      })
+    });    
+  </script>
+</head>
+
+<body>
+  <div id="chat_text" style="height:300; width:300; border:1px solid black;">
+  </div>
+  <div>
+    <input type="text" id="chat_input" size="25"/>
+    <br/>
+    <input type="submit" id="chat_submit"/>
+  </div>
+</body>
+
+</html>
