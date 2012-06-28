@@ -14,6 +14,13 @@ app.get('/libraries/jquery.min.js', function(req, res) {
   res.sendfile(__dirname + '/libraries/jquery.min.js');  
 });
 
+app.get('/test_json/:item_id', function(req, res) {
+  res.contentType('application/json');
+  redis_client.get(req.params.item_id, function(err, value){
+    res.send(JSON.stringify({'foo':value}));
+  }); 
+});
+
 io.sockets.on('connection', function(client) {
   var cname;
   client.on('join', function(name) {
