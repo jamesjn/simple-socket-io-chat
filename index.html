@@ -4,14 +4,31 @@
   <script src="/socket.io/socket.io.js"></script>
   <script src="/libraries/jquery.min.js"></script>
   <script>
-    var socket = io.connect("http://jamesjn.com:8080");
+    var server = io.connect("http://jamesjn.com:8080");
 
     $(document).ready(function(){
+      server.on('connect', function(data){
+        $('div#chat_text').append('connected to server <br/>'); 
+        server.emit('join', 'user1'); 
+      });
+      server.on("message", function(data){
+        $('div#chat_text').append(data + '<br/>'); 
+      });
       $('input#chat_submit').on('click', function(){
+        send_message();
+      });
+      
+      $('input#chat_input').on('keyup', function(e){
+        if(event.keyCode ==13){
+          send_message();
+        }
+      });            
+      var send_message = function(){
         text = $('input#chat_input').val();
-        $('div#chat_text').append(text+'<br/>');
-        socket.emit("message", { message: text });
-      })
+        $('div#chat_text').append('user1' + ': ' + text+'<br/>');
+        server.emit("message", { message: text });
+        $('input#chat_input').val('');
+      };
     });    
   </script>
 </head>
