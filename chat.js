@@ -30,6 +30,7 @@ io.sockets.on('connection', function(client) {
     redis_client.lpush("messages", JSON.stringify({name: cname, data: data.message}), function(err, response) {
       redis_client.ltrim("messages", 0, 10);
     });
+    client.broadcast.emit("message", cname + ": " + data.message);
   })
 })
 

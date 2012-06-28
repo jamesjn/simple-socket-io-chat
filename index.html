@@ -28,13 +28,15 @@
         $('div#chat_text').append('user1' + ': ' + text+'<br/>');
         server.emit("message", { message: text });
         $('input#chat_input').val('');
+        $('div#chat_text').scrollTop($('div#chat_text').height());
+        
       };
     });    
   </script>
 </head>
 
 <body>
-  <div id="chat_text" style="height:300; width:300; border:1px solid black;">
+  <div id="chat_text" style="height:300; width:300; border:1px solid black; overflow:auto">
   </div>
   <div>
     <input type="text" id="chat_input" size="25"/>
