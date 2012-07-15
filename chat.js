@@ -23,8 +23,8 @@ app.get('/test_json/:item_id', function(req, res) {
 
 io.sockets.on('connection', function(client) {
   var cname;
-  client.on('join', function(name) {
-    cname = name;
+  client.on('join', function(name_data) {
+    cname = name_data.name;
     redis_client.lrange('messages', 0, -1, function(err, messages){
       messages = messages.reverse();
       messages.forEach(function(message) {

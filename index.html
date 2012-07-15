@@ -9,7 +9,7 @@
     $(document).ready(function(){
       server.on('connect', function(data){
         $('div#chat_text').append('connected to server <br/>'); 
-        server.emit('join', 'user1'); 
+        server.emit('join', {name:'user1'}); 
       });
       server.on("message", function(data){
         $('div#chat_text').append(data + '<br/>'); 
